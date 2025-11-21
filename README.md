@@ -2,6 +2,10 @@
 
 Application web interactive pour apprendre et pratiquer les verbes irréguliers anglais.
 
+🌐 **Version en ligne** : [Voir l'application sur GitHub Pages](https://rocky1324.github.io/Irregular-Verbs/)
+
+---
+
 ## 🚀 Fonctionnalités
 
 - 📚 **Navigation par catégories** : 6 catégories de verbes irréguliers organisés logiquement
