@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Irregular Verbs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-title svg {
+            color: #1976d2;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            font-size: 1.75rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        aside {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        nav {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 1rem;
+            position: sticky;
+            top: 100px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .nav-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-btn.active {
+            background: #1976d2;
+            color: white;
+        }
+
+        main {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .search-container {
+            position: relative;
+            margin: 1.5rem 0;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .category-card {
+            padding: 1.5rem;
+            border: 2px solid #bbdefb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-card:hover {
+            border-color: #1976d2;
+            box-shadow: 0 4px 12px rgba(25,118,210,0.2);
+            transform: translateY(-2px);
+        }
+
+        .category-card h3 {
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tip-box {
+            background: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: white;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        th:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .sort-icon {
+            display: inline-block;
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #e3f2fd;
+        }
+
+        td {
+            padding: 1rem;
+            color: #333;
+        }
+
+        .verb-count {
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+
+        footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+
+            aside {
+                width: 100%;
+            }
+
+            nav {
+                position: static;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            aside.mobile-hidden {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-title">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <h1>English Irregular Verbs</h1>
+            </div>
+            <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside id="sidebar">
+            <nav>
+                <button class="nav-btn active" onclick="showSection('home')">Home</button>
+                <button class="nav-btn" onclick="showSection('noChange')">No Change</button>
+                <button class="nav-btn" onclick="showSection('vowelChange')">Vowel Changes</button>
+                <button class="nav-btn" onclick="showSection('samePastParticiple')">Same Past & Past Participle</button>
+                <button class="nav-btn" onclick="showSection('onlyParticipleDiff')">Only Past Participle Changes</button>
+                <button class="nav-btn" onclick="showSection('endingEn')">Ending in "en"</button>
+                <button class="nav-btn" onclick="showSection('endingGht')">Ending in "ght"</button>
+            </nav>
+        </aside>
+
+        <main id="mainContent">
+            <!-- Content will be inserted here by JavaScript -->
+        </main>
+    </div>
+
+    <footer>
+        <p>Master English irregular verbs through organized learning</p>
+    </footer>
+
+    <script>
+        const verbsData = {
+            noChange: [
+                ['bet', 'bet', 'bet'], ['bid', 'bid', 'bid'], ['broadcast', 'broadcast', 'broadcast'],
+                ['burst', 'burst', 'burst'], ['cast', 'cast', 'cast'], ['cost', 'cost', 'cost'],
+                ['cut', 'cut', 'cut'], ['hit', 'hit', 'hit'], ['hurt', 'hurt', 'hurt'],
+                ['let', 'let', 'let'], ['put', 'put', 'put'], ['quit', 'quit', 'quit'],
+                ['read', 'read', 'read'], ['set', 'set', 'set'], ['shut', 'shut', 'shut'],
+                ['split', 'split', 'split'], ['spread', 'spread', 'spread'], ['thrust', 'thrust', 'thrust']
+            ],
+            vowelChange: [
+                ['arise', 'arose', 'arisen'], ['awake', 'awoke', 'awoken'], ['be', 'was/were', 'been'],
+                ['bear', 'bore', 'born/borne'], ['begin', 'began', 'begun'], ['blow', 'blew', 'blown'],
+                ['break', 'broke', 'broken'], ['choose', 'chose', 'chosen'], ['do', 'did', 'done'],
+                ['draw', 'drew', 'drawn'], ['drink', 'drank', 'drunk'], ['drive', 'drove', 'driven'],
+                ['eat', 'ate', 'eaten'], ['fall', 'fell', 'fallen'], ['fly', 'flew', 'flown'],
+                ['forget', 'forgot', 'forgotten'], ['forgive', 'forgave', 'forgiven'], ['freeze', 'froze', 'frozen'],
+                ['give', 'gave', 'given'], ['go', 'went', 'gone'], ['grow', 'grew', 'grown'],
+                ['hide', 'hid', 'hidden'], ['know', 'knew', 'known'], ['lie', 'lay', 'lain'],
+                ['ride', 'rode', 'ridden'], ['ring', 'rang', 'rung'], ['rise', 'rose', 'risen'],
+                ['run', 'ran', 'run'], ['see', 'saw', 'seen'], ['shake', 'shook', 'shaken'],
+                ['show', 'showed', 'shown'], ['shrink', 'shrank', 'shrunk'], ['sing', 'sang', 'sung'],
+                ['sink', 'sank', 'sunk'], ['speak', 'spoke', 'spoken'], ['spring', 'sprang', 'sprung'],
+                ['steal', 'stole', 'stolen'], ['stink', 'stank', 'stunk'], ['swear', 'swore', 'sworn'],
+                ['swim', 'swam', 'swum'], ['take', 'took', 'taken'], ['tear', 'tore', 'torn'],
+                ['throw', 'threw', 'thrown'], ['wake', 'woke', 'woken'], ['wear', 'wore', 'worn'],
+                ['write', 'wrote', 'written']
+            ],
+            samePastParticiple: [
+                ['bend', 'bent', 'bent'], ['bleed', 'bled', 'bled'], ['breed', 'bred', 'bred'],
+                ['build', 'built', 'built'], ['burn', 'burnt/burned', 'burnt/burned'], ['catch', 'caught', 'caught'],
+                ['cling', 'clung', 'clung'], ['deal', 'dealt', 'dealt'], ['dig', 'dug', 'dug'],
+                ['dream', 'dreamt/dreamed', 'dreamt/dreamed'], ['dwell', 'dwelt', 'dwelt'], ['feed', 'fed', 'fed'],
+                ['feel', 'felt', 'felt'], ['fight', 'fought', 'fought'], ['find', 'found', 'found'],
+                ['flee', 'fled', 'fled'], ['get', 'got', 'got/gotten'], ['grind', 'ground', 'ground'],
+                ['hang', 'hung', 'hung'], ['have', 'had', 'had'], ['hear', 'heard', 'heard'],
+                ['hold', 'held', 'held'], ['keep', 'kept', 'kept'], ['kneel', 'knelt', 'knelt'],
+                ['lay', 'laid', 'laid'], ['lead', 'led', 'led'], ['lean', 'leant/leaned', 'leant/leaned'],
+                ['leap', 'leapt/leaped', 'leapt/leaped'], ['learn', 'learnt/learned', 'learnt/learned'],
+                ['leave', 'left', 'left'], ['lend', 'lent', 'lent'], ['light', 'lit', 'lit'],
+                ['lose', 'lost', 'lost'], ['make', 'made', 'made'], ['mean', 'meant', 'meant'],
+                ['meet', 'met', 'met'], ['pay', 'paid', 'paid'], ['sell', 'sold', 'sold'],
+                ['send', 'sent', 'sent'], ['shine', 'shone', 'shone'], ['shoot', 'shot', 'shot'],
+                ['sit', 'sat', 'sat'], ['sleep', 'slept', 'slept'], ['slide', 'slid', 'slid'],
+                ['smell', 'smelt/smelled', 'smelt/smelled'], ['speed', 'sped', 'sped'],
+                ['spell', 'spelt/spelled', 'spelt/spelled'], ['spend', 'spent', 'spent'],
+                ['spill', 'spilt/spilled', 'spilt/spilled'], ['spin', 'spun', 'spun'], ['spit', 'spat', 'spat'],
+                ['spoil', 'spoilt/spoiled', 'spoilt/spoiled'], ['stand', 'stood', 'stood'], ['stick', 'stuck', 'stuck'],
+                ['sting', 'stung', 'stung'], ['strike', 'struck', 'struck'], ['string', 'strung', 'strung'],
+                ['sweep', 'swept', 'swept'], ['swing', 'swung', 'swung'], ['teach', 'taught', 'taught'],
+                ['tell', 'told', 'told'], ['think', 'thought', 'thought'], ['understand', 'understood', 'understood'],
+                ['weep', 'wept', 'wept'], ['win', 'won', 'won'], ['wind', 'wound', 'wound'],
+                ['wring', 'wrung', 'wrung']
+            ],
+            onlyParticipleDiff: [
+                ['beat', 'beat', 'beaten']
+            ],
+            endingEn: [
+                ['arise', 'arose', 'arisen'], ['awake', 'awoke', 'awoken'], ['bear', 'bore', 'born/borne'],
+                ['beat', 'beat', 'beaten'], ['begin', 'began', 'begun'], ['bite', 'bit', 'bitten'],
+                ['blow', 'blew', 'blown'], ['break', 'broke', 'broken'], ['choose', 'chose', 'chosen'],
+                ['draw', 'drew', 'drawn'], ['drive', 'drove', 'driven'], ['eat', 'ate', 'eaten'],
+                ['fall', 'fell', 'fallen'], ['fly', 'flew', 'flown'], ['forbid', 'forbade', 'forbidden'],
+                ['forget', 'forgot', 'forgotten'], ['forgive', 'forgave', 'forgiven'], ['forsake', 'forsook', 'forsaken'],
+                ['freeze', 'froze', 'frozen'], ['give', 'gave', 'given'], ['grow', 'grew', 'grown'],
+                ['hide', 'hid', 'hidden'], ['know', 'knew', 'known'], ['mistake', 'mistook', 'mistaken'],
+                ['ride', 'rode', 'ridden'], ['rise', 'rose', 'risen'], ['see', 'saw', 'seen'],
+                ['shake', 'shook', 'shaken'], ['show', 'showed', 'shown'], ['shrink', 'shrank', 'shrunk/shrunken'],
+                ['speak', 'spoke', 'spoken'], ['steal', 'stole', 'stolen'], ['swear', 'swore', 'sworn'],
+                ['take', 'took', 'taken'], ['tear', 'tore', 'torn'], ['throw', 'threw', 'thrown'],
+                ['tread', 'trod', 'trodden'], ['wake', 'woke', 'woken'], ['wear', 'wore', 'worn'],
+                ['weave', 'wove', 'woven'], ['write', 'wrote', 'written']
+            ],
+            endingGht: [
+                ['bring', 'brought', 'brought'], ['buy', 'bought', 'bought'], ['catch', 'caught', 'caught'],
+                ['fight', 'fought', 'fought'], ['seek', 'sought', 'sought'], ['teach', 'taught', 'taught'],
+                ['think', 'thought', 'thought']
+            ]
+        };
+
+        const categories = {
+            noChange: { name: 'No Change', description: 'Verbs that remain the same in all forms' },
+            vowelChange: { name: 'Vowel Changes', description: 'Verbs with vowel alterations between forms' },
+            samePastParticiple: { name: 'Same Past & Past Participle', description: 'Simple Past = Past Participle ≠ Base' },
+            onlyParticipleDiff: { name: 'Only Past Participle Changes', description: 'Base = Simple Past ≠ Past Participle' },
+            endingEn: { name: 'Past Participle ending in "en"', description: 'Verbs with "-en" ending in Past Participle' },
+            endingGht: { name: 'Ending in "ght"', description: 'Simple Past or Past Participle ending in "-ght"' }
+        };
+
+        let currentCategory = 'home';
+        let currentSort = { column: null, direction: 'asc' };
+        let searchTerm = '';
+
+        function showSection(section) {
+            currentCategory = section;
+            currentSort = { column: null, direction: 'asc' };
+            searchTerm = '';
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('mobile-hidden');
+            }
+            
+            if (section === 'home') {
+                showHomePage();
+            } else {
+                showCategoryPage(section);
+            }
+        }
+
+        function showHomePage() {
+            const content = `
+                <h2 style="font-size: 2rem; color: #1a1a1a; margin-bottom: 1rem;">Welcome!</h2>
+                <p style="color: #555; line-height: 1.6; margin-bottom: 2rem;">
+                    This application helps you master English irregular verbs by organizing them into logical categories. 
+                    Irregular verbs don't follow the standard "-ed" pattern for past forms, making them essential to memorize 
+                    for fluent English communication.
+                </p>
+                
+                <div class="category-grid">
+                    ${Object.entries(categories).map(([id, cat]) => `
+                        <div class="category-card" onclick="showSectionById('${id}')">
+                            <h3>${cat.name}</h3>
+                            <p>${cat.description}</p>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="tip-box">
+                    <p><strong>Tip:</strong> Use the search bar to find specific verbs quickly, and click on column headers to sort the tables!</p>
+                </div>
+            `;
+            document.getElementById('mainContent').innerHTML = content;
+        }
+
+        function showCategoryPage(category) {
+            const cat = categories[category];
+            const content = `
+                <h2 style="font-size: 1.75rem; color: #1a1a1a; margin-bottom: 0.5rem;">${cat.name}</h2>
+                <p style="color: #666; margin-bottom: 1.5rem;">${cat.description}</p>
+                
+                <div class="search-container">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search verbs..." oninput="handleSearch()">
+                </div>
+
+                <div id="tableContainer"></div>
+                <div id="verbCount" class="verb-count"></div>
+            `;
+            document.getElementById('mainContent').innerHTML = content;
+            renderTable(category);
+        }
+
+        function renderTable(category) {
+            const verbs = verbsData[category];
+            let filtered = verbs.filter(verb => 
+                verb.some(form => form.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+
+            if (currentSort.column !== null) {
+                filtered.sort((a, b) => {
+                    const aVal = a[currentSort.column].toLowerCase();
+                    const bVal = b[currentSort.column].toLowerCase();
+                    if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
+                    if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
+                    return 0;
+                });
+            }
+
+            const headers = ['Base', 'Simple Past', 'Past Participle'];
+            const sortIcon = (col) => {
+                if (currentSort.column === col) {
+                    return currentSort.direction === 'asc' ? ' ▲' : ' ▼';
+                }
+                return '';
+            };
+
+            const tableHTML = filtered.length > 0 ? `
+                <table>
+                    <thead>
+                        <tr>
+                            ${headers.map((h, i) => `
+                                <th onclick="handleSort(${i})">
+                                    ${h}<span class="sort-icon">${sortIcon(i)}</span>
+                                </th>
+                            `).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filtered.map(verb => `
+                            <tr>
+                                ${verb.map(form => `<td>${form}</td>`).join('')}
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            ` : '<div class="no-results">No verbs found matching your search.</div>';
+
+            document.getElementById('tableContainer').innerHTML = tableHTML;
+            document.getElementById('verbCount').textContent = 
+                `Showing ${filtered.length} of ${verbs.length} verbs`;
+        }
+
+        function handleSort(column) {
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+            renderTable(currentCategory);
+        }
+
+        function handleSearch() {
+            searchTerm = document.getElementById('searchInput').value;
+            renderTable(currentCategory);
+        }
+
+        function showSectionById(id) {
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttons[Object.keys(categories).indexOf(id) + 1].classList.add('active');
+            
+            currentCategory = id;
+            showCategoryPage(id);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('sidebar').classList.toggle('mobile-hidden');
+        }
+
+        // Initialize
+        showHomePage();
+    </script>
+</body>
+</html>

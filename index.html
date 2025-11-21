@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Irregular Verbs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>English Irregular Verbs</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search verbs...">
+                <i class="fas fa-search"></i>
+            </div>
+            <button id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <div class="container">
+            <aside class="sidebar">
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-category="all">All Verbs</a></li>
+                        <li><a href="#" class="nav-link" data-category="no-change">No Change</a></li>
+                        <li><a href="#" class="nav-link" data-category="vowel-change">Vowel Changes</a></li>
+                        <li><a href="#" class="nav-link" data-category="same-past-participle">Same Past & PP</a></li>
+                        <li><a href="#" class="nav-link" data-category="only-pp-change">Only PP Changes</a></li>
+                        <li><a href="#" class="nav-link" data-category="en-ending">PP ends with 'en'</a></li>
+                        <li><a href="#" class="nav-link" data-category="ght-ending">Past/PP with 'ght'</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main>
+                <div id="home" class="content-section active">
+                    <h2>Welcome to English Irregular Verbs</h2>
+                    <p>This application helps you learn and practice English irregular verbs. Use the navigation menu to explore different categories of irregular verbs or search for specific verbs using the search bar above.</p>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <h3>6</h3>
+                            <p>Categories</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>150+</h3>
+                            <p>Verbs</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>3</h3>
+                            <p>Forms Each</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button id="start-exercise-btn" class="btn">Commencer un exercice</button>
+                        <button id="download-pdf-btn" class="btn" style="background-color: #27ae60;">
+                            <i class="fas fa-download"></i> Télécharger le PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div id="verbs-container" class="content-section">
+                    <div class="table-container">
+                        <table id="verbs-table">
+                            <thead>
+                                <tr>
+                                    <th data-sort="base">Base Form <i class="fas fa-sort"></i></th>
+                                    <th data-sort="past">Simple Past <i class="fas fa-sort"></i></th>
+                                    <th data-sort="participle">Past Participle <i class="fas fa-sort"></i></th>
+                                    <th>Audio</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verbs-tbody">
+                                <!-- Verbs will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-auth-modal">&times;</span>
+            <h2>Connexion / Inscription</h2>
+            <div id="auth-forms">
+                <div id="login-form">
+                    <h3>Connexion</h3>
+                    <input type="email" id="login-email" placeholder="Email" required>
+                    <input type="password" id="login-password" placeholder="Mot de passe" required>
+                    <button id="login-btn" class="btn">Se connecter</button>
+                    <p>Pas encore de compte ? <a href="#" id="show-register">S'inscrire</a></p>
+                </div>
+                <div id="register-form" style="display: none;">
+                    <h3>Inscription</h3>
+                    <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
+                    <input type="email" id="register-email" placeholder="Email" required>
+                    <input type="password" id="register-password" placeholder="Mot de passe" required>
+                    <input type="password" id="register-confirm-password" placeholder="Confirmer le mot de passe" required>
+                    <button type="submit" id="register-submit" class="btn">S'inscrire</button>
+                    <p>Déjà un compte ? <a href="#" id="show-login">Se connecter</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="verb-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-verb-details-modal">&times;</span>
+            <h2 id="verb-details-title">Détails du verbe</h2>
+            <div id="verb-details-content">
+                <div id="verb-forms">
+                    <div class="verb-form-item">
+                        <strong>Base Form:</strong> <span id="verb-base-form"></span>
+                    </div>
+                    <div class="verb-form-item">
+                        <strong>Simple Past:</strong> <span id="verb-past-form"></span>
+                    </div>
+                    <div class="verb-form-item">
+                        <strong>Past Participle:</strong> <span id="verb-participle-form"></span>
+                    </div>
+                </div>
+                <div id="verb-explanation">
+                    <h3>Explication</h3>
+                    <p id="verb-explanation-text"></p>
+                </div>
+                <div id="verb-examples">
+                    <h3>Exemples de phrases</h3>
+                    <ul id="verb-examples-list"></ul>
+                </div>
+                <div id="verb-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                    <button id="practice-verb-btn" class="btn">Pratiquer ce verbe</button>
+                    <button id="pronounce-verb-btn" class="btn" style="background-color: #27ae60;">
+                        <i class="fas fa-volume-up"></i> Prononcer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="exercise-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-exercise-modal">&times;</span>
+            <div id="exercise-container">
+                <div id="exercise-header">
+                    <span id="exercise-progress">Question 1/10</span>
+                    <span id="exercise-timer">Temps restant: 60s</span>
+                </div>
+                <h2 id="exercise-question">Question</h2>
+                <div id="exercise-options" class="options-container">
+                    <!-- Les options seront ajoutées dynamiquement -->
+                </div>
+                <div id="exercise-feedback"></div>
+                <button id="next-question-btn" class="btn" style="display: none;">Question suivante</button>
+                <button id="finish-quiz-btn" class="btn" style="display: none;">Terminer le quiz</button>
+            </div>
+            <div id="exercise-results" style="display: none;">
+                <h2>Résultats du quiz</h2>
+                <div id="score-display">Score: 0/0 (0%)</div>
+                <div id="time-spent">Temps passé: 0s</div>
+                <div id="correct-answers">Bonnes réponses: 0</div>
+                <button id="restart-quiz" class="btn">Recommencer</button>
+                <button id="close-quiz" class="btn">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bibliothèque jsPDF pour générer des PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Charger data.js en premier (non-module pour les fonctions globales) -->
+    <script src="data.js"></script>
+    <!-- Charger les modules -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
