@@ -211,7 +211,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pronounceVerbBtn.addEventListener('click', () => {
             const verbBase = verbBaseForm.textContent;
-            if (verbBase) speakWord(verbBase);
+            const verbPast = verbPastForm.textContent;
+            const verbParticiple = verbParticipleForm.textContent;
+
+            if (verbBase) {
+                const textToSpeak = `${verbBase}, ${verbPast}, ${verbParticiple}`;
+                speakWord(textToSpeak);
+            }
         });
 
         startExerciseBtn.addEventListener('click', () => startQuiz('beginner', 60));
@@ -613,7 +619,10 @@ document.addEventListener('DOMContentLoaded', () => {
             audioBtn.title = `Pronounce "${verb.base || ''}"`;
             audioBtn.onclick = (e) => {
                 e.stopPropagation();
-                if (verb.base) speakWord(verb.base);
+                if (verb.base) {
+                    const textToSpeak = `${verb.base}, ${verb.past}, ${verb.pastParticiple}`;
+                    speakWord(textToSpeak);
+                }
             };
             const audioCell = document.createElement('td');
             audioCell.className = 'p-3 text-center';
