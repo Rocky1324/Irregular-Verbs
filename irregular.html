@@ -3,567 +3,556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Irregular Verbs</title>
+    <title>English Irregular Verbs Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        fadeIn: 'fadeIn 0.3s ease-out',
+                        slideDown: 'slideDown 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
-            min-height: 100vh;
-        }
-
-        header {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .header-title svg {
-            color: #1976d2;
-        }
-
-        h1 {
-            color: #1a1a1a;
-            font-size: 1.75rem;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: flex;
-            gap: 2rem;
-        }
-
-        aside {
-            width: 280px;
-            flex-shrink: 0;
-        }
-
-        nav {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 1rem;
-            position: sticky;
-            top: 100px;
-        }
-
-        .nav-btn {
-            width: 100%;
-            text-align: left;
-            padding: 1rem;
-            border: none;
-            background: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .nav-btn:hover {
-            background: #f5f5f5;
-        }
-
-        .nav-btn.active {
-            background: #1976d2;
-            color: white;
-        }
-
-        main {
-            flex: 1;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 2rem;
-        }
-
-        .search-container {
-            position: relative;
-            margin: 1.5rem 0;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-        }
-
-        #searchInput {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 3rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        #searchInput:focus {
-            outline: none;
-            border-color: #1976d2;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .category-card {
-            padding: 1.5rem;
-            border: 2px solid #bbdefb;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .category-card:hover {
-            border-color: #1976d2;
-            box-shadow: 0 4px 12px rgba(25,118,210,0.2);
-            transform: translateY(-2px);
-        }
-
-        .category-card h3 {
-            color: #1976d2;
-            margin-bottom: 0.5rem;
-        }
-
-        .category-card p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .tip-box {
-            background: #e3f2fd;
-            border-left: 4px solid #1976d2;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1.5rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        thead {
-            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
-            color: white;
-        }
-
-        th {
-            padding: 1rem;
-            text-align: left;
-            cursor: pointer;
-            user-select: none;
-            position: relative;
-        }
-
-        th:hover {
-            background: rgba(0,0,0,0.1);
-        }
-
-        .sort-icon {
-            display: inline-block;
-            margin-left: 0.5rem;
-            font-size: 0.8rem;
-        }
-
-        tbody tr {
-            border-bottom: 1px solid #e0e0e0;
-            transition: background 0.2s;
-        }
-
-        tbody tr:hover {
-            background: #e3f2fd;
-        }
-
-        td {
-            padding: 1rem;
-            color: #333;
-        }
-
-        .verb-count {
-            margin-top: 1rem;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 3rem;
-            color: #999;
-        }
-
-        footer {
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            margin-top: 3rem;
-            padding: 1.5rem;
-            text-align: center;
-            color: #666;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 1024px) {
-            .container {
-                flex-direction: column;
-            }
-
-            aside {
-                width: 100%;
-            }
-
-            nav {
-                position: static;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            aside.mobile-hidden {
-                display: none;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 1rem;
-            }
-
-            main {
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 1.25rem;
-            }
-
-            table {
-                font-size: 0.9rem;
-            }
-
-            th, td {
-                padding: 0.75rem 0.5rem;
-            }
-        }
+        /* Custom Scrollbar for Webkit */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body>
-    <header>
-        <div class="header-content">
-            <div class="header-title">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                </svg>
-                <h1>English Irregular Verbs</h1>
-            </div>
-            <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
-        </div>
-    </header>
+<body class="bg-slate-50 text-slate-800 transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100 font-sans antialiased overflow-hidden">
 
-    <div class="container">
-        <aside id="sidebar">
-            <nav>
-                <button class="nav-btn active" onclick="showSection('home')">Home</button>
-                <button class="nav-btn" onclick="showSection('noChange')">No Change</button>
-                <button class="nav-btn" onclick="showSection('vowelChange')">Vowel Changes</button>
-                <button class="nav-btn" onclick="showSection('samePastParticiple')">Same Past & Past Participle</button>
-                <button class="nav-btn" onclick="showSection('onlyParticipleDiff')">Only Past Participle Changes</button>
-                <button class="nav-btn" onclick="showSection('endingEn')">Ending in "en"</button>
-                <button class="nav-btn" onclick="showSection('endingGht')">Ending in "ght"</button>
+    <div id="app" class="flex flex-col md:flex-row h-screen">
+        <!-- Mobile Header -->
+        <div class="md:hidden bg-white dark:bg-slate-800 p-4 flex justify-between items-center border-b border-slate-200 dark:border-slate-700 z-20">
+            <button id="mobile-menu-btn" class="p-1">
+                <i data-lucide="menu"></i>
+            </button>
+            <span class="font-bold text-lg text-blue-600 dark:text-blue-400">Irregular Verbs</span>
+            <button id="mobile-theme-btn" class="p-1">
+                <i data-lucide="moon" class="theme-icon"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-30 w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:translate-x-0 transition-transform duration-300 flex flex-col shadow-xl md:shadow-none">
+            <div class="p-6 hidden md:flex items-center justify-between">
+                <div class="flex items-center gap-2 font-bold text-xl text-blue-600 dark:text-blue-400">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                    <span>VerbsApp</span>
+                </div>
+            </div>
+
+            <nav id="nav-container" class="flex-1 overflow-y-auto p-4 space-y-1">
+                <!-- Navigation items will be injected here -->
             </nav>
+
+            <div class="p-4 border-t border-slate-200 dark:border-slate-700 hidden md:block">
+                <button id="desktop-theme-btn" class="w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                    <i data-lucide="moon" class="w-4 h-4 theme-icon"></i>
+                    <span id="theme-text" class="text-sm">Dark Mode</span>
+                </button>
+            </div>
         </aside>
 
-        <main id="mainContent">
-            <!-- Content will be inserted here by JavaScript -->
+        <!-- Mobile Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-20 hidden md:hidden backdrop-blur-sm"></div>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+            
+            <!-- Top Search Bar (Visible on List Views) -->
+            <div id="search-container" class="hidden p-4 md:p-8 pb-0">
+                <div class="relative max-w-md">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                    <input type="text" id="search-input" placeholder="Search verbs..." class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-shadow shadow-sm">
+                </div>
+            </div>
+
+            <!-- Scrollable Content Area -->
+            <div id="main-content" class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12">
+                <!-- Dynamic Content Injected Here -->
+            </div>
         </main>
     </div>
 
-    <footer>
-        <p>Master English irregular verbs through organized learning</p>
-    </footer>
-
     <script>
-        const verbsData = {
-            noChange: [
-                ['bet', 'bet', 'bet'], ['bid', 'bid', 'bid'], ['broadcast', 'broadcast', 'broadcast'],
-                ['burst', 'burst', 'burst'], ['cast', 'cast', 'cast'], ['cost', 'cost', 'cost'],
-                ['cut', 'cut', 'cut'], ['hit', 'hit', 'hit'], ['hurt', 'hurt', 'hurt'],
-                ['let', 'let', 'let'], ['put', 'put', 'put'], ['quit', 'quit', 'quit'],
-                ['read', 'read', 'read'], ['set', 'set', 'set'], ['shut', 'shut', 'shut'],
-                ['split', 'split', 'split'], ['spread', 'spread', 'spread'], ['thrust', 'thrust', 'thrust']
-            ],
-            vowelChange: [
-                ['arise', 'arose', 'arisen'], ['awake', 'awoke', 'awoken'], ['be', 'was/were', 'been'],
-                ['bear', 'bore', 'born/borne'], ['begin', 'began', 'begun'], ['blow', 'blew', 'blown'],
-                ['break', 'broke', 'broken'], ['choose', 'chose', 'chosen'], ['do', 'did', 'done'],
-                ['draw', 'drew', 'drawn'], ['drink', 'drank', 'drunk'], ['drive', 'drove', 'driven'],
-                ['eat', 'ate', 'eaten'], ['fall', 'fell', 'fallen'], ['fly', 'flew', 'flown'],
-                ['forget', 'forgot', 'forgotten'], ['forgive', 'forgave', 'forgiven'], ['freeze', 'froze', 'frozen'],
-                ['give', 'gave', 'given'], ['go', 'went', 'gone'], ['grow', 'grew', 'grown'],
-                ['hide', 'hid', 'hidden'], ['know', 'knew', 'known'], ['lie', 'lay', 'lain'],
-                ['ride', 'rode', 'ridden'], ['ring', 'rang', 'rung'], ['rise', 'rose', 'risen'],
-                ['run', 'ran', 'run'], ['see', 'saw', 'seen'], ['shake', 'shook', 'shaken'],
-                ['show', 'showed', 'shown'], ['shrink', 'shrank', 'shrunk'], ['sing', 'sang', 'sung'],
-                ['sink', 'sank', 'sunk'], ['speak', 'spoke', 'spoken'], ['spring', 'sprang', 'sprung'],
-                ['steal', 'stole', 'stolen'], ['stink', 'stank', 'stunk'], ['swear', 'swore', 'sworn'],
-                ['swim', 'swam', 'swum'], ['take', 'took', 'taken'], ['tear', 'tore', 'torn'],
-                ['throw', 'threw', 'thrown'], ['wake', 'woke', 'woken'], ['wear', 'wore', 'worn'],
-                ['write', 'wrote', 'written']
-            ],
-            samePastParticiple: [
-                ['bend', 'bent', 'bent'], ['bleed', 'bled', 'bled'], ['breed', 'bred', 'bred'],
-                ['build', 'built', 'built'], ['burn', 'burnt/burned', 'burnt/burned'], ['catch', 'caught', 'caught'],
-                ['cling', 'clung', 'clung'], ['deal', 'dealt', 'dealt'], ['dig', 'dug', 'dug'],
-                ['dream', 'dreamt/dreamed', 'dreamt/dreamed'], ['dwell', 'dwelt', 'dwelt'], ['feed', 'fed', 'fed'],
-                ['feel', 'felt', 'felt'], ['fight', 'fought', 'fought'], ['find', 'found', 'found'],
-                ['flee', 'fled', 'fled'], ['get', 'got', 'got/gotten'], ['grind', 'ground', 'ground'],
-                ['hang', 'hung', 'hung'], ['have', 'had', 'had'], ['hear', 'heard', 'heard'],
-                ['hold', 'held', 'held'], ['keep', 'kept', 'kept'], ['kneel', 'knelt', 'knelt'],
-                ['lay', 'laid', 'laid'], ['lead', 'led', 'led'], ['lean', 'leant/leaned', 'leant/leaned'],
-                ['leap', 'leapt/leaped', 'leapt/leaped'], ['learn', 'learnt/learned', 'learnt/learned'],
-                ['leave', 'left', 'left'], ['lend', 'lent', 'lent'], ['light', 'lit', 'lit'],
-                ['lose', 'lost', 'lost'], ['make', 'made', 'made'], ['mean', 'meant', 'meant'],
-                ['meet', 'met', 'met'], ['pay', 'paid', 'paid'], ['sell', 'sold', 'sold'],
-                ['send', 'sent', 'sent'], ['shine', 'shone', 'shone'], ['shoot', 'shot', 'shot'],
-                ['sit', 'sat', 'sat'], ['sleep', 'slept', 'slept'], ['slide', 'slid', 'slid'],
-                ['smell', 'smelt/smelled', 'smelt/smelled'], ['speed', 'sped', 'sped'],
-                ['spell', 'spelt/spelled', 'spelt/spelled'], ['spend', 'spent', 'spent'],
-                ['spill', 'spilt/spilled', 'spilt/spilled'], ['spin', 'spun', 'spun'], ['spit', 'spat', 'spat'],
-                ['spoil', 'spoilt/spoiled', 'spoilt/spoiled'], ['stand', 'stood', 'stood'], ['stick', 'stuck', 'stuck'],
-                ['sting', 'stung', 'stung'], ['strike', 'struck', 'struck'], ['string', 'strung', 'strung'],
-                ['sweep', 'swept', 'swept'], ['swing', 'swung', 'swung'], ['teach', 'taught', 'taught'],
-                ['tell', 'told', 'told'], ['think', 'thought', 'thought'], ['understand', 'understood', 'understood'],
-                ['weep', 'wept', 'wept'], ['win', 'won', 'won'], ['wind', 'wound', 'wound'],
-                ['wring', 'wrung', 'wrung']
-            ],
-            onlyParticipleDiff: [
-                ['beat', 'beat', 'beaten']
-            ],
-            endingEn: [
-                ['arise', 'arose', 'arisen'], ['awake', 'awoke', 'awoken'], ['bear', 'bore', 'born/borne'],
-                ['beat', 'beat', 'beaten'], ['begin', 'began', 'begun'], ['bite', 'bit', 'bitten'],
-                ['blow', 'blew', 'blown'], ['break', 'broke', 'broken'], ['choose', 'chose', 'chosen'],
-                ['draw', 'drew', 'drawn'], ['drive', 'drove', 'driven'], ['eat', 'ate', 'eaten'],
-                ['fall', 'fell', 'fallen'], ['fly', 'flew', 'flown'], ['forbid', 'forbade', 'forbidden'],
-                ['forget', 'forgot', 'forgotten'], ['forgive', 'forgave', 'forgiven'], ['forsake', 'forsook', 'forsaken'],
-                ['freeze', 'froze', 'frozen'], ['give', 'gave', 'given'], ['grow', 'grew', 'grown'],
-                ['hide', 'hid', 'hidden'], ['know', 'knew', 'known'], ['mistake', 'mistook', 'mistaken'],
-                ['ride', 'rode', 'ridden'], ['rise', 'rose', 'risen'], ['see', 'saw', 'seen'],
-                ['shake', 'shook', 'shaken'], ['show', 'showed', 'shown'], ['shrink', 'shrank', 'shrunk/shrunken'],
-                ['speak', 'spoke', 'spoken'], ['steal', 'stole', 'stolen'], ['swear', 'swore', 'sworn'],
-                ['take', 'took', 'taken'], ['tear', 'tore', 'torn'], ['throw', 'threw', 'thrown'],
-                ['tread', 'trod', 'trodden'], ['wake', 'woke', 'woken'], ['wear', 'wore', 'worn'],
-                ['weave', 'wove', 'woven'], ['write', 'wrote', 'written']
-            ],
-            endingGht: [
-                ['bring', 'brought', 'brought'], ['buy', 'bought', 'bought'], ['catch', 'caught', 'caught'],
-                ['fight', 'fought', 'fought'], ['seek', 'sought', 'sought'], ['teach', 'taught', 'taught'],
-                ['think', 'thought', 'thought']
-            ]
-        };
+        // --- Data ---
+        const MASTER_VERB_LIST = [
+            { base: 'arise', past: 'arose', participle: 'arisen' },
+            { base: 'awake', past: 'awoke', participle: 'awoken' },
+            { base: 'be', past: 'was/were', participle: 'been' },
+            { base: 'bear', past: 'bore', participle: 'born' },
+            { base: 'beat', past: 'beat', participle: 'beaten' },
+            { base: 'become', past: 'became', participle: 'become' },
+            { base: 'begin', past: 'began', participle: 'begun' },
+            { base: 'bend', past: 'bent', participle: 'bent' },
+            { base: 'bet', past: 'bet', participle: 'bet' },
+            { base: 'bid', past: 'bid', participle: 'bid' },
+            { base: 'bite', past: 'bit', participle: 'bitten' },
+            { base: 'blow', past: 'blew', participle: 'blown' },
+            { base: 'break', past: 'broke', participle: 'broken' },
+            { base: 'bring', past: 'brought', participle: 'brought' },
+            { base: 'broadcast', past: 'broadcast', participle: 'broadcast' },
+            { base: 'build', past: 'built', participle: 'built' },
+            { base: 'burn', past: 'burnt', participle: 'burnt' },
+            { base: 'burst', past: 'burst', participle: 'burst' },
+            { base: 'buy', past: 'bought', participle: 'bought' },
+            { base: 'catch', past: 'caught', participle: 'caught' },
+            { base: 'choose', past: 'chose', participle: 'chosen' },
+            { base: 'come', past: 'came', participle: 'come' },
+            { base: 'cost', past: 'cost', participle: 'cost' },
+            { base: 'cut', past: 'cut', participle: 'cut' },
+            { base: 'dig', past: 'dug', participle: 'dug' },
+            { base: 'do', past: 'did', participle: 'done' },
+            { base: 'draw', past: 'drew', participle: 'drawn' },
+            { base: 'drink', past: 'drank', participle: 'drunk' },
+            { base: 'drive', past: 'drove', participle: 'driven' },
+            { base: 'eat', past: 'ate', participle: 'eaten' },
+            { base: 'fall', past: 'fell', participle: 'fallen' },
+            { base: 'feed', past: 'fed', participle: 'fed' },
+            { base: 'feel', past: 'felt', participle: 'felt' },
+            { base: 'fight', past: 'fought', participle: 'fought' },
+            { base: 'find', past: 'found', participle: 'found' },
+            { base: 'fly', past: 'flew', participle: 'flown' },
+            { base: 'forget', past: 'forgot', participle: 'forgotten' },
+            { base: 'forgive', past: 'forgave', participle: 'forgiven' },
+            { base: 'freeze', past: 'froze', participle: 'frozen' },
+            { base: 'get', past: 'got', participle: 'got/gotten' },
+            { base: 'give', past: 'gave', participle: 'given' },
+            { base: 'go', past: 'went', participle: 'gone' },
+            { base: 'grow', past: 'grew', participle: 'grown' },
+            { base: 'hang', past: 'hung', participle: 'hung' },
+            { base: 'have', past: 'had', participle: 'had' },
+            { base: 'hear', past: 'heard', participle: 'heard' },
+            { base: 'hide', past: 'hid', participle: 'hidden' },
+            { base: 'hit', past: 'hit', participle: 'hit' },
+            { base: 'hold', past: 'held', participle: 'held' },
+            { base: 'hurt', past: 'hurt', participle: 'hurt' },
+            { base: 'keep', past: 'kept', participle: 'kept' },
+            { base: 'know', past: 'knew', participle: 'known' },
+            { base: 'lay', past: 'laid', participle: 'laid' },
+            { base: 'lead', past: 'led', participle: 'led' },
+            { base: 'leave', past: 'left', participle: 'left' },
+            { base: 'lend', past: 'lent', participle: 'lent' },
+            { base: 'let', past: 'let', participle: 'let' },
+            { base: 'lie', past: 'lay', participle: 'lain' },
+            { base: 'light', past: 'lit', participle: 'lit' },
+            { base: 'lose', past: 'lost', participle: 'lost' },
+            { base: 'make', past: 'made', participle: 'made' },
+            { base: 'mean', past: 'meant', participle: 'meant' },
+            { base: 'meet', past: 'met', participle: 'met' },
+            { base: 'pay', past: 'paid', participle: 'paid' },
+            { base: 'put', past: 'put', participle: 'put' },
+            { base: 'read', past: 'read', participle: 'read' },
+            { base: 'ride', past: 'rode', participle: 'ridden' },
+            { base: 'ring', past: 'rang', participle: 'rung' },
+            { base: 'rise', past: 'rose', participle: 'risen' },
+            { base: 'run', past: 'ran', participle: 'run' },
+            { base: 'say', past: 'said', participle: 'said' },
+            { base: 'see', past: 'saw', participle: 'seen' },
+            { base: 'seek', past: 'sought', participle: 'sought' },
+            { base: 'sell', past: 'sold', participle: 'sold' },
+            { base: 'send', past: 'sent', participle: 'sent' },
+            { base: 'set', past: 'set', participle: 'set' },
+            { base: 'shake', past: 'shook', participle: 'shaken' },
+            { base: 'shine', past: 'shone', participle: 'shone' },
+            { base: 'shoot', past: 'shot', participle: 'shot' },
+            { base: 'show', past: 'showed', participle: 'shown' },
+            { base: 'shut', past: 'shut', participle: 'shut' },
+            { base: 'sing', past: 'sang', participle: 'sung' },
+            { base: 'sit', past: 'sat', participle: 'sat' },
+            { base: 'sleep', past: 'slept', participle: 'slept' },
+            { base: 'speak', past: 'spoke', participle: 'spoken' },
+            { base: 'spend', past: 'spent', participle: 'spent' },
+            { base: 'spread', past: 'spread', participle: 'spread' },
+            { base: 'stand', past: 'stood', participle: 'stood' },
+            { base: 'steal', past: 'stole', participle: 'stolen' },
+            { base: 'stick', past: 'stuck', participle: 'stuck' },
+            { base: 'swim', past: 'swam', participle: 'swum' },
+            { base: 'take', past: 'took', participle: 'taken' },
+            { base: 'teach', past: 'taught', participle: 'taught' },
+            { base: 'tear', past: 'tore', participle: 'torn' },
+            { base: 'tell', past: 'told', participle: 'told' },
+            { base: 'think', past: 'thought', participle: 'thought' },
+            { base: 'throw', past: 'threw', participle: 'thrown' },
+            { base: 'understand', past: 'understood', participle: 'understood' },
+            { base: 'wake', past: 'woke', participle: 'woken' },
+            { base: 'wear', past: 'wore', participle: 'worn' },
+            { base: 'win', past: 'won', participle: 'won' },
+            { base: 'write', past: 'wrote', participle: 'written' }
+        ];
 
-        const categories = {
-            noChange: { name: 'No Change', description: 'Verbs that remain the same in all forms' },
-            vowelChange: { name: 'Vowel Changes', description: 'Verbs with vowel alterations between forms' },
-            samePastParticiple: { name: 'Same Past & Past Participle', description: 'Simple Past = Past Participle ≠ Base' },
-            onlyParticipleDiff: { name: 'Only Past Participle Changes', description: 'Base = Simple Past ≠ Past Participle' },
-            endingEn: { name: 'Past Participle ending in "en"', description: 'Verbs with "-en" ending in Past Participle' },
-            endingGht: { name: 'Ending in "ght"', description: 'Simple Past or Past Participle ending in "-ght"' }
-        };
+        const CATEGORIES = [
+            { id: 'home', title: 'Home', icon: 'home', desc: 'Welcome & Overview', filter: null },
+            { id: 'no-change', title: 'No Change', icon: 'repeat', desc: 'Base = Past = Participle', filter: (v) => v.base === v.past && v.past === v.participle },
+            { id: 'vowel-change', title: 'Vowel Changes', icon: 'type', desc: 'i → a → u patterns & others', filter: (v) => {
+                const allDiff = v.base !== v.past && v.past !== v.participle && v.base !== v.participle;
+                return allDiff || (v.base === 'come' || v.base === 'run' || v.base === 'become');
+            }},
+            { id: 'identical-past', title: 'Identical Past/Part.', icon: 'copy', desc: 'Past = Participle ≠ Base', filter: (v) => v.past === v.participle && v.base !== v.past },
+            { id: 'base-past', title: 'Only Participle Differs', icon: 'alert-circle', desc: 'Base = Past ≠ Participle', filter: (v) => v.base === v.past && v.base !== v.participle },
+            { id: 'ends-en', title: "Ends in 'en'", icon: 'arrow-right-circle', desc: "Participle ends in 'en'", filter: (v) => v.participle.endsWith('en') || (v.participle.endsWith('n') && v.base !== v.participle) },
+            { id: 'ends-ght', title: "Ends in 'ght'", icon: 'flame', desc: "Ends in 'ght'", filter: (v) => v.past.endsWith('ght') },
+            { id: 'quiz', title: 'Quiz Mode', icon: 'gamepad-2', desc: 'Test your knowledge', filter: null },
+        ];
 
-        let currentCategory = 'home';
-        let currentSort = { column: null, direction: 'asc' };
-        let searchTerm = '';
-
-        function showSection(section) {
-            currentCategory = section;
-            currentSort = { column: null, direction: 'asc' };
-            searchTerm = '';
-            
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (window.innerWidth < 1024) {
-                document.getElementById('sidebar').classList.add('mobile-hidden');
+        // --- State ---
+        let state = {
+            category: 'home',
+            darkMode: false,
+            searchTerm: '',
+            sidebarOpen: false,
+            sortKey: 'base',
+            sortDirection: 'asc',
+            quiz: {
+                card: null,
+                score: { correct: 0, total: 0 },
+                status: 'idle' // idle, correct, incorrect
             }
+        };
+
+        // --- Initialization ---
+        function init() {
+            renderSidebar();
+            renderContent();
             
-            if (section === 'home') {
-                showHomePage();
+            // Event Listeners
+            document.getElementById('mobile-menu-btn').addEventListener('click', toggleSidebar);
+            document.getElementById('sidebar-overlay').addEventListener('click', toggleSidebar);
+            document.getElementById('mobile-theme-btn').addEventListener('click', toggleTheme);
+            document.getElementById('desktop-theme-btn').addEventListener('click', toggleTheme);
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                state.searchTerm = e.target.value;
+                renderContent();
+            });
+
+            // Initial Icon Scan
+            lucide.createIcons();
+        }
+
+        // --- Actions ---
+        function setCategory(id) {
+            state.category = id;
+            state.searchTerm = '';
+            state.sidebarOpen = false;
+            document.getElementById('search-input').value = '';
+            updateSidebarUI();
+            toggleSidebar(false); // Ensure closed on mobile
+            renderContent();
+            
+            // Show/Hide Search based on category
+            const searchContainer = document.getElementById('search-container');
+            if (id !== 'home' && id !== 'quiz') {
+                searchContainer.classList.remove('hidden');
             } else {
-                showCategoryPage(section);
+                searchContainer.classList.add('hidden');
             }
         }
 
-        function showHomePage() {
-            const content = `
-                <h2 style="font-size: 2rem; color: #1a1a1a; margin-bottom: 1rem;">Welcome!</h2>
-                <p style="color: #555; line-height: 1.6; margin-bottom: 2rem;">
-                    This application helps you master English irregular verbs by organizing them into logical categories. 
-                    Irregular verbs don't follow the standard "-ed" pattern for past forms, making them essential to memorize 
-                    for fluent English communication.
-                </p>
-                
-                <div class="category-grid">
-                    ${Object.entries(categories).map(([id, cat]) => `
-                        <div class="category-card" onclick="showSectionById('${id}')">
-                            <h3>${cat.name}</h3>
-                            <p>${cat.description}</p>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <div class="tip-box">
-                    <p><strong>Tip:</strong> Use the search bar to find specific verbs quickly, and click on column headers to sort the tables!</p>
-                </div>
-            `;
-            document.getElementById('mainContent').innerHTML = content;
-        }
-
-        function showCategoryPage(category) {
-            const cat = categories[category];
-            const content = `
-                <h2 style="font-size: 1.75rem; color: #1a1a1a; margin-bottom: 0.5rem;">${cat.name}</h2>
-                <p style="color: #666; margin-bottom: 1.5rem;">${cat.description}</p>
-                
-                <div class="search-container">
-                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.35-4.35"></path>
-                    </svg>
-                    <input type="text" id="searchInput" placeholder="Search verbs..." oninput="handleSearch()">
-                </div>
-
-                <div id="tableContainer"></div>
-                <div id="verbCount" class="verb-count"></div>
-            `;
-            document.getElementById('mainContent').innerHTML = content;
-            renderTable(category);
-        }
-
-        function renderTable(category) {
-            const verbs = verbsData[category];
-            let filtered = verbs.filter(verb => 
-                verb.some(form => form.toLowerCase().includes(searchTerm.toLowerCase()))
-            );
-
-            if (currentSort.column !== null) {
-                filtered.sort((a, b) => {
-                    const aVal = a[currentSort.column].toLowerCase();
-                    const bVal = b[currentSort.column].toLowerCase();
-                    if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
-                    if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
-                    return 0;
-                });
+        function toggleSidebar(force) {
+            if (typeof force === 'boolean') state.sidebarOpen = force;
+            else state.sidebarOpen = !state.sidebarOpen;
+            
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (state.sidebarOpen) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
             }
+        }
 
-            const headers = ['Base', 'Simple Past', 'Past Participle'];
-            const sortIcon = (col) => {
-                if (currentSort.column === col) {
-                    return currentSort.direction === 'asc' ? ' ▲' : ' ▼';
+        function toggleTheme() {
+            state.darkMode = !state.darkMode;
+            const html = document.documentElement;
+            const icons = document.querySelectorAll('.theme-icon');
+            const text = document.getElementById('theme-text');
+
+            if (state.darkMode) {
+                html.classList.add('dark');
+                text.textContent = 'Light Mode';
+                icons.forEach(i => { i.setAttribute('data-lucide', 'sun'); });
+            } else {
+                html.classList.remove('dark');
+                text.textContent = 'Dark Mode';
+                icons.forEach(i => { i.setAttribute('data-lucide', 'moon'); });
+            }
+            lucide.createIcons();
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // --- Rendering Logic ---
+
+        function renderSidebar() {
+            const nav = document.getElementById('nav-container');
+            nav.innerHTML = CATEGORIES.map(cat => `
+                <button 
+                    onclick="setCategory('${cat.id}')"
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors nav-item ${state.category === cat.id ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700'}"
+                    data-id="${cat.id}"
+                >
+                    <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
+                    ${cat.title}
+                </button>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function updateSidebarUI() {
+            const btns = document.querySelectorAll('.nav-item');
+            btns.forEach(btn => {
+                if (btn.dataset.id === state.category) {
+                    btn.className = 'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors nav-item bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300';
+                } else {
+                    btn.className = 'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors nav-item text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700';
                 }
-                return '';
-            };
-
-            const tableHTML = filtered.length > 0 ? `
-                <table>
-                    <thead>
-                        <tr>
-                            ${headers.map((h, i) => `
-                                <th onclick="handleSort(${i})">
-                                    ${h}<span class="sort-icon">${sortIcon(i)}</span>
-                                </th>
-                            `).join('')}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filtered.map(verb => `
-                            <tr>
-                                ${verb.map(form => `<td>${form}</td>`).join('')}
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            ` : '<div class="no-results">No verbs found matching your search.</div>';
-
-            document.getElementById('tableContainer').innerHTML = tableHTML;
-            document.getElementById('verbCount').textContent = 
-                `Showing ${filtered.length} of ${verbs.length} verbs`;
+            });
         }
 
-        function handleSort(column) {
-            if (currentSort.column === column) {
-                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+        function renderContent() {
+            const main = document.getElementById('main-content');
+            main.innerHTML = ''; // Clear
+
+            if (state.category === 'home') {
+                renderHome(main);
+            } else if (state.category === 'quiz') {
+                renderQuiz(main);
             } else {
-                currentSort.column = column;
-                currentSort.direction = 'asc';
+                renderTable(main);
             }
-            renderTable(currentCategory);
+            lucide.createIcons();
         }
 
-        function handleSearch() {
-            searchTerm = document.getElementById('searchInput').value;
-            renderTable(currentCategory);
+        function renderHome(container) {
+            container.innerHTML = `
+                <div class="animate-fadeIn space-y-8 max-w-5xl mx-auto">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <h2 class="text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">Master Irregular Verbs</h2>
+                        <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                            English irregular verbs can be tricky, but identifying patterns makes them easier to learn. 
+                            Explore our organized categories below or test yourself in the quiz mode.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${CATEGORIES.filter(c => c.id !== 'home' && c.id !== 'quiz').map(cat => `
+                            <button onclick="setCategory('${cat.id}')" class="group p-6 bg-white dark:bg-slate-800 rounded-xl shadow-sm hover:shadow-md border border-slate-200 dark:border-slate-700 transition-all duration-200 text-left flex flex-col h-full">
+                                <div class="flex items-center justify-between mb-3">
+                                    <i data-lucide="${cat.icon}" class="w-8 h-8 text-blue-500"></i>
+                                    <i data-lucide="arrow-right" class="w-5 h-5 text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-2">${cat.title}</h3>
+                                <p class="text-sm text-slate-500 dark:text-slate-400">${cat.desc}</p>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
         }
 
-        function showSectionById(id) {
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            buttons[Object.keys(categories).indexOf(id) + 1].classList.add('active');
-            
-            currentCategory = id;
-            showCategoryPage(id);
+        // --- Table Logic ---
+        function renderTable(container) {
+            const catConfig = CATEGORIES.find(c => c.id === state.category);
+            let data = MASTER_VERB_LIST.filter(catConfig.filter);
+
+            // Search Filter
+            if (state.searchTerm) {
+                const term = state.searchTerm.toLowerCase();
+                data = data.filter(v => v.base.includes(term) || v.past.includes(term) || v.participle.includes(term));
+            }
+
+            // Sorting
+            data.sort((a, b) => {
+                const valA = a[state.sortKey];
+                const valB = b[state.sortKey];
+                if (valA < valB) return state.sortDirection === 'asc' ? -1 : 1;
+                if (valA > valB) return state.sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            const sortIcon = (key) => {
+                if (state.sortKey !== key) return '';
+                return state.sortDirection === 'asc' ? '<i data-lucide="chevron-up" class="w-4 h-4 ml-1"></i>' : '<i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>';
+            }
+
+            container.innerHTML = `
+                <div class="animate-fadeIn max-w-5xl mx-auto">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+                            <i data-lucide="${catConfig.icon}" class="text-blue-500"></i> ${catConfig.title}
+                        </h2>
+                        <span class="text-sm text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">${data.length} verbs</span>
+                    </div>
+                    <div class="overflow-x-auto bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm uppercase tracking-wider">
+                                    ${['base', 'past', 'participle'].map(col => `
+                                        <th onclick="changeSort('${col}')" class="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors select-none">
+                                            <div class="flex items-center">
+                                                ${col === 'past' ? 'Simple Past' : col === 'participle' ? 'Past Participle' : 'Base'}
+                                                ${sortIcon(col)}
+                                            </div>
+                                        </th>
+                                    `).join('')}
+                                    <th class="p-4 w-16">Audio</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                                ${data.length > 0 ? data.map(verb => `
+                                    <tr class="hover:bg-blue-50/50 dark:hover:bg-slate-700/50 transition-colors text-slate-700 dark:text-slate-300">
+                                        <td class="p-4 font-medium text-blue-600 dark:text-blue-400">${verb.base}</td>
+                                        <td class="p-4">${verb.past}</td>
+                                        <td class="p-4">${verb.participle}</td>
+                                        <td class="p-4">
+                                            <button onclick="speak('${verb.base}, ${verb.past}, ${verb.participle}')" class="p-2 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-100 dark:hover:bg-slate-600 transition-all">
+                                                <i data-lucide="volume-2" class="w-5 h-5"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('') : `
+                                    <tr><td colSpan="4" class="p-8 text-center text-slate-500">No verbs found matching your search.</td></tr>
+                                `}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
         }
 
-        function toggleMobileMenu() {
-            document.getElementById('sidebar').classList.toggle('mobile-hidden');
+        function changeSort(key) {
+            if (state.sortKey === key) {
+                state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                state.sortKey = key;
+                state.sortDirection = 'asc';
+            }
+            renderContent();
         }
 
-        // Initialize
-        showHomePage();
+        // --- Quiz Logic ---
+        function renderQuiz(container) {
+            // Initialize quiz card if none exists
+            if (!state.quiz.card) {
+                generateQuizCard();
+            }
+
+            const { card, status, score } = state.quiz;
+
+            container.innerHTML = `
+                <div class="animate-fadeIn max-w-2xl mx-auto bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-8 border border-slate-200 dark:border-slate-700">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                            <i data-lucide="award" class="text-yellow-500"></i> Quiz Mode
+                        </h2>
+                        <div class="text-sm font-mono bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-full">
+                            Score: ${score.correct}/${score.total}
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <p class="text-sm uppercase tracking-wider text-slate-500 mb-2">Base Form</p>
+                        <h1 class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-4">${card.base}</h1>
+                        <button onclick="speak('${card.base}')" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors inline-block">
+                            <i data-lucide="volume-2" class="w-6 h-6 text-slate-400"></i>
+                        </button>
+                    </div>
+
+                    <form id="quiz-form" onsubmit="submitQuiz(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Simple Past</label>
+                                <input required type="text" id="quiz-past" ${status !== 'idle' ? 'disabled' : ''} class="w-full p-3 rounded-lg border ${status === 'incorrect' ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-slate-300 dark:border-slate-600 dark:bg-slate-900'} focus:ring-2 focus:ring-blue-500 outline-none transition-colors" placeholder="?">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Past Participle</label>
+                                <input required type="text" id="quiz-participle" ${status !== 'idle' ? 'disabled' : ''} class="w-full p-3 rounded-lg border ${status === 'incorrect' ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-slate-300 dark:border-slate-600 dark:bg-slate-900'} focus:ring-2 focus:ring-blue-500 outline-none transition-colors" placeholder="?">
+                            </div>
+                        </div>
+
+                        ${status === 'idle' ? `
+                            <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-md">Check Answer</button>
+                        ` : `
+                            <div class="animate-fadeIn">
+                                <div class="p-4 rounded-lg mb-4 ${status === 'correct' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'}">
+                                    ${status === 'correct' 
+                                        ? '<div class="flex items-center gap-2 font-bold"><i data-lucide="check-circle" class="w-5 h-5"></i> Correct!</div>' 
+                                        : `<div class="flex flex-col gap-1">
+                                            <div class="font-bold flex items-center gap-2"><i data-lucide="x" class="w-5 h-5"></i> Incorrect</div>
+                                            <div class="text-sm">Answer: ${card.past}, ${card.participle}</div>
+                                           </div>`
+                                    }
+                                </div>
+                                <button type="button" onclick="nextQuizCard()" class="w-full py-3 bg-slate-800 dark:bg-slate-700 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-md">Next Verb</button>
+                            </div>
+                        `}
+                    </form>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function generateQuizCard() {
+            state.quiz.card = MASTER_VERB_LIST[Math.floor(Math.random() * MASTER_VERB_LIST.length)];
+            state.quiz.status = 'idle';
+        }
+
+        function submitQuiz(e) {
+            e.preventDefault();
+            const pastInput = document.getElementById('quiz-past').value.trim().toLowerCase();
+            const partInput = document.getElementById('quiz-participle').value.trim().toLowerCase();
+            const { card } = state.quiz;
+
+            if (pastInput === card.past && partInput === card.participle) {
+                state.quiz.status = 'correct';
+                state.quiz.score.correct++;
+                speak('Correct!');
+            } else {
+                state.quiz.status = 'incorrect';
+                speak('Incorrect');
+            }
+            state.quiz.score.total++;
+            renderContent(); // Re-render to show results
+        }
+
+        function nextQuizCard() {
+            generateQuizCard();
+            renderContent();
+        }
+
+        // Initialize App
+        window.onload = init;
+
     </script>
 </body>
 </html>

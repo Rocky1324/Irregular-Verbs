@@ -188,7 +188,7 @@ Object.entries(verbsData).forEach(([category, verbs]) => {
 });
 
 // Create a flattened array of all verbs for searching
-const allVerbs = Object.values(verbsData).flat();
+export const allVerbs = Object.values(verbsData).flat();
 
 // Map kebab-case to camelCase
 const categoryMap = {
@@ -200,14 +200,13 @@ const categoryMap = {
     'ght-ending': 'ghtEnding'
 };
 
-// Make functions globally available
-window.getVerbsByCategory = function(category) {
+export function getVerbsByCategory(category) {
     const mappedCategory = categoryMap[category] || category;
     if (mappedCategory === 'all') return allVerbs;
     return allVerbs.filter(verb => verb.category === mappedCategory);
 };
 
-window.searchVerbs = function(query) {
+export function searchVerbs(query) {
     if (!query || !query.trim()) return allVerbs;
     const searchTerm = query.toLowerCase().trim();
     return allVerbs.filter(verb => 
@@ -215,11 +214,11 @@ window.searchVerbs = function(query) {
     );
 };
 
-window.getRandomVerb = function() {
+export function getRandomVerb() {
     return allVerbs[Math.floor(Math.random() * allVerbs.length)];
 };
 
-window.getRandomOptions = function(correctVerb, field, count = 4) {
+export function getRandomOptions(correctVerb, field, count = 4) {
     const options = [correctVerb[field]];
     const allOptions = allVerbs.map(v => v[field]);
     
@@ -234,5 +233,159 @@ window.getRandomOptions = function(correctVerb, field, count = 4) {
     return options.sort(() => Math.random() - 0.5);
 };
 
-// Make allVerbs available globally
-window.allVerbs = allVerbs;
+// Data moved from app.js
+export const verbDetailsData = {
+    'be': {
+        explanation: 'Le verbe "be" (être) est l\'un des verbes les plus irréguliers en anglais. Il change complètement entre les formes.',
+        examples: [
+            'I am happy. (Je suis heureux.)',
+            'She was at home yesterday. (Elle était à la maison hier.)',
+            'They have been friends for years. (Ils sont amis depuis des années.)'
+        ]
+    },
+    'go': {
+        explanation: 'Le verbe "go" (aller) a une forme passée unique "went" qui ne ressemble pas à la forme de base.',
+        examples: [
+            'I go to school every day. (Je vais à l\'école tous les jours.)',
+            'She went to Paris last summer. (Elle est allée à Paris l\'été dernier.)',
+            'They have gone to the store. (Ils sont allés au magasin.)'
+        ]
+    },
+    'do': {
+        explanation: 'Le verbe "do" (faire) est très utilisé et a des formes irrégulières.',
+        examples: [
+            'I do my homework. (Je fais mes devoirs.)',
+            'He did his best. (Il a fait de son mieux.)',
+            'We have done the work. (Nous avons fait le travail.)'
+        ]
+    },
+    'have': {
+        explanation: 'Le verbe "have" (avoir) est utilisé pour exprimer la possession et dans les temps composés.',
+        examples: [
+            'I have a car. (J\'ai une voiture.)',
+            'She had breakfast. (Elle a pris le petit-déjeuner.)',
+            'They have had enough. (Ils en ont assez eu.)'
+        ]
+    },
+    'get': {
+        explanation: 'Le verbe "get" (obtenir, recevoir) est très polyvalent en anglais.',
+        examples: [
+            'I get up early. (Je me lève tôt.)',
+            'She got a new job. (Elle a obtenu un nouveau travail.)',
+            'We have gotten better. (Nous nous sommes améliorés.)'
+        ]
+    },
+    'make': {
+        explanation: 'Le verbe "make" (faire, fabriquer) est utilisé pour créer ou produire quelque chose.',
+        examples: [
+            'I make coffee every morning. (Je fais du café chaque matin.)',
+            'She made a cake. (Elle a fait un gâteau.)',
+            'They have made progress. (Ils ont fait des progrès.)'
+        ]
+    },
+    'take': {
+        explanation: 'Le verbe "take" (prendre) est utilisé dans de nombreux contextes.',
+        examples: [
+            'I take a shower. (Je prends une douche.)',
+            'She took the bus. (Elle a pris le bus.)',
+            'We have taken notes. (Nous avons pris des notes.)'
+        ]
+    },
+    'see': {
+        explanation: 'Le verbe "see" (voir) décrit l\'action de percevoir avec les yeux.',
+        examples: [
+            'I see a bird. (Je vois un oiseau.)',
+            'She saw a movie. (Elle a vu un film.)',
+            'We have seen this before. (Nous avons déjà vu cela.)'
+        ]
+    },
+    'know': {
+        explanation: 'Le verbe "know" (savoir, connaître) exprime la connaissance ou la familiarité.',
+        examples: [
+            'I know the answer. (Je connais la réponse.)',
+            'She knew him well. (Elle le connaissait bien.)',
+            'We have known each other for years. (Nous nous connaissons depuis des années.)'
+        ]
+    },
+    'think': {
+        explanation: 'Le verbe "think" (penser) exprime l\'activité mentale ou l\'opinion.',
+        examples: [
+            'I think it\'s a good idea. (Je pense que c\'est une bonne idée.)',
+            'She thought about it. (Elle y a réfléchi.)',
+            'We have thought it through. (Nous y avons réfléchi.)'
+        ]
+    },
+    'come': {
+        explanation: 'Le verbe "come" (venir) indique le mouvement vers le locuteur.',
+        examples: [
+            'I come here often. (Je viens souvent ici.)',
+            'She came to visit. (Elle est venue visiter.)',
+            'They have come a long way. (Ils ont fait beaucoup de chemin.)'
+        ]
+    },
+    'give': {
+        explanation: 'Le verbe "give" (donner) exprime l\'action de transférer quelque chose.',
+        examples: [
+            'I give presents. (Je donne des cadeaux.)',
+            'She gave me a book. (Elle m\'a donné un livre.)',
+            'We have given our best. (Nous avons donné notre meilleur.)'
+        ]
+    },
+    'find': {
+        explanation: 'Le verbe "find" (trouver) décrit la découverte de quelque chose.',
+        examples: [
+            'I find it interesting. (Je le trouve intéressant.)',
+            'She found her keys. (Elle a trouvé ses clés.)',
+            'We have found a solution. (Nous avons trouvé une solution.)'
+        ]
+    },
+    'tell': {
+        explanation: 'Le verbe "tell" (dire, raconter) est utilisé pour communiquer des informations.',
+        examples: [
+            'I tell stories. (Je raconte des histoires.)',
+            'She told me the truth. (Elle m\'a dit la vérité.)',
+            'We have told them everything. (Nous leur avons tout dit.)'
+        ]
+    },
+    'feel': {
+        explanation: 'Le verbe "feel" (sentir, ressentir) exprime les sensations physiques ou émotionnelles.',
+        examples: [
+            'I feel happy. (Je me sens heureux.)',
+            'She felt tired. (Elle se sentait fatiguée.)',
+            'We have felt better. (Nous nous sommes sentis mieux.)'
+        ]
+    }
+};
+
+export const verbTranslations = {
+    'cut': 'couper', 'hit': 'frapper', 'put': 'mettre', 'set': 'placer', 'shut': 'fermer',
+    'let': 'laisser', 'hurt': 'blesser', 'bet': 'parier', 'bid': 'enchérir', 'cost': 'coûter',
+    'quit': 'quitter', 'split': 'diviser', 'spread': 'étaler', 'burst': 'éclater',
+    'broadcast': 'diffuser', 'dig': 'creuser', 'build': 'construire', 'burn': 'brûler',
+    'deal': 'traiter', 'feed': 'nourrir', 'feel': 'sentir', 'fight': 'se battre',
+    'find': 'trouver', 'flee': 'fuir', 'get': 'obtenir', 'grind': 'moudre', 'hang': 'pendre',
+    'hear': 'entendre', 'hold': 'tenir', 'keep': 'garder', 'kneel': 's\'agenouiller',
+    'lay': 'poser', 'lead': 'mener', 'leave': 'partir', 'lend': 'prêter', 'light': 'allumer',
+    'lose': 'perdre', 'mean': 'signifier', 'meet': 'rencontrer', 'pay': 'payer',
+    'say': 'dire', 'sell': 'vendre', 'send': 'envoyer', 'shine': 'briller', 'shoot': 'tirer',
+    'sit': 's\'asseoir', 'sleep': 'dormir', 'slide': 'glisser', 'spend': 'dépenser',
+    'spin': 'tourner', 'spit': 'cracher', 'stand': 'se tenir debout', 'stick': 'coller',
+    'sting': 'piquer', 'strike': 'frapper', 'sweep': 'balayer', 'swing': 'se balancer',
+    'teach': 'enseigner', 'tell': 'dire', 'think': 'penser', 'understand': 'comprendre',
+    'weep': 'pleurer', 'win': 'gagner', 'wind': 'enrouler', 'wring': 'tordre',
+    'begin': 'commencer', 'blow': 'souffler', 'break': 'casser', 'choose': 'choisir',
+    'draw': 'dessiner', 'drink': 'boire', 'drive': 'conduire', 'eat': 'manger',
+    'fall': 'tomber', 'fly': 'voler', 'forget': 'oublier', 'freeze': 'geler',
+    'give': 'donner', 'grow': 'grandir', 'hide': 'cacher', 'ride': 'monter',
+    'ring': 'sonner', 'rise': 's\'élever', 'run': 'courir', 'shake': 'secouer',
+    'sing': 'chanter', 'speak': 'parler', 'steal': 'voler', 'swear': 'jurer',
+    'swim': 'nager', 'tear': 'déchirer', 'throw': 'lancer', 'wake': 'réveiller',
+    'wear': 'porter', 'weave': 'tisser', 'write': 'écrire', 'arise': 'survenir',
+    'awake': 'réveiller', 'bear': 'porter', 'bite': 'mordre', 'forbid': 'interdire',
+    'forgive': 'pardonner', 'forsake': 'abandonner', 'mistake': 'se tromper',
+    'overcome': 'surmonter', 'overtake': 'dépasser', 'prove': 'prouver', 'sew': 'coudre',
+    'show': 'montrer', 'shrink': 'rétrécir', 'sow': 'semer', 'strike': 'frapper',
+    'swell': 'gonfler', 'tread': 'marcher', 'withdraw': 'retirer', 'bring': 'apporter',
+    'buy': 'acheter', 'catch': 'attraper', 'seek': 'chercher'
+};
+

@@ -15,7 +15,7 @@ class ExerciseManager {
     }
 
     // Initialiser un nouveau quiz chronométré
-    startTimedQuiz(difficulty = 'beginner', timeLimit = 60, onTimeUpCallback = null) {
+    startTimedQuiz(difficulty = 'beginner', timeLimit = 60, onTimeUpCallback = null, allVerbs = []) {
         // Arrêter le timer précédent s'il existe
         if (this.timer) {
             clearInterval(this.timer);
@@ -25,7 +25,7 @@ class ExerciseManager {
         this.timeLimit = timeLimit;
         this.timeLeft = timeLimit;
         this.score = 0;
-        this.questions = this.generateQuestions(difficulty);
+        this.questions = this.generateQuestions(difficulty, allVerbs);
         this.currentQuestionIndex = 0;
         this.isQuizFinished = false;
         this.onTimeUp = onTimeUpCallback;
@@ -81,8 +81,7 @@ class ExerciseManager {
     }
 
     // Générer des questions en fonction de la difficulté
-    generateQuestions(difficulty) {
-        const verbs = window.allVerbs || [];
+    generateQuestions(difficulty, verbs = []) {
         if (verbs.length === 0) {
             console.error('No verbs available');
             return [];

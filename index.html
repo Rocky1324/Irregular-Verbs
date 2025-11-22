@@ -1,180 +1,457 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Irregular Verbs</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>English Irregular Verbs Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        fadeIn: 'fadeIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Toast Notification */
+        .toast-notification {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast-notification.success {
+            background-color: #10b981;
+        }
+
+        .toast-notification.error {
+            background-color: #ef4444;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Sorted Column Highlight */
+        td.sorted-column {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .dark td.sorted-column {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+    </style>
 </head>
-<body>
-    <div class="app">
-        <header>
-            <h1>English Irregular Verbs</h1>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search verbs...">
-                <i class="fas fa-search"></i>
+
+<body
+    class="bg-slate-50 text-slate-800 transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100 font-sans antialiased overflow-hidden">
+
+    <div id="app" class="flex flex-col md:flex-row h-screen">
+
+        <!-- Sidebar -->
+        <aside
+            class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col hidden md:flex z-20">
+            <div class="p-6 flex items-center gap-2 font-bold text-xl text-blue-600 dark:text-blue-400">
+                <i class="fas fa-book-open"></i>
+                <span>VerbsApp</span>
             </div>
-            <button id="themeToggle" aria-label="Toggle dark mode">
-                <i class="fas fa-moon"></i>
-            </button>
-        </header>
 
-        <div class="container">
-            <aside class="sidebar">
-                <nav>
-                    <ul>
-                        <li><a href="#" class="nav-link active" data-category="all">All Verbs</a></li>
-                        <li><a href="#" class="nav-link" data-category="no-change">No Change</a></li>
-                        <li><a href="#" class="nav-link" data-category="vowel-change">Vowel Changes</a></li>
-                        <li><a href="#" class="nav-link" data-category="same-past-participle">Same Past & PP</a></li>
-                        <li><a href="#" class="nav-link" data-category="only-pp-change">Only PP Changes</a></li>
-                        <li><a href="#" class="nav-link" data-category="en-ending">PP ends with 'en'</a></li>
-                        <li><a href="#" class="nav-link" data-category="ght-ending">Past/PP with 'ght'</a></li>
-                    </ul>
-                </nav>
-            </aside>
-
-            <main>
-                <div id="home" class="content-section active">
-                    <h2>Welcome to English Irregular Verbs</h2>
-                    <p>This application helps you learn and practice English irregular verbs. Use the navigation menu to explore different categories of irregular verbs or search for specific verbs using the search bar above.</p>
-                    <div class="stats">
-                        <div class="stat-card">
-                            <h3>6</h3>
-                            <p>Categories</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>150+</h3>
-                            <p>Verbs</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>3</h3>
-                            <p>Forms Each</p>
-                        </div>
-                    </div>
-                    <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button id="start-exercise-btn" class="btn">Commencer un exercice</button>
-                        <button id="download-pdf-btn" class="btn" style="background-color: #27ae60;">
-                            <i class="fas fa-download"></i> Télécharger le PDF
-                        </button>
-                    </div>
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="all">
+                    <i class="fas fa-list w-5 text-center"></i> All Verbs
+                </a>
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="favorites">
+                    <i class="fas fa-star w-5 text-center"></i> Favorites
+                </a>
+                <div class="pt-4 pb-2 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Categories
                 </div>
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="noChange">
+                    <i class="fas fa-equals w-5 text-center"></i> No Change
+                </a>
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="vowelChange">
+                    <i class="fas fa-font w-5 text-center"></i> Vowel Change
+                </a>
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="samePastParticiple">
+                    <i class="fas fa-copy w-5 text-center"></i> Same Past/Part.
+                </a>
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="onlyPPChange">
+                    <i class="fas fa-exclamation-circle w-5 text-center"></i> Only PP Change
+                </a>
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="enEnding">
+                    <i class="fas fa-arrow-right w-5 text-center"></i> Ends in 'en'
+                </a>
+                <a href="#"
+                    class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                    data-category="ghtEnding">
+                    <i class="fas fa-fire w-5 text-center"></i> Ends in 'ght'
+                </a>
+            </nav>
 
-                <div id="verbs-container" class="content-section">
-                    <div class="table-container">
-                        <table id="verbs-table">
-                            <thead>
-                                <tr>
-                                    <th data-sort="base">Base Form <i class="fas fa-sort"></i></th>
-                                    <th data-sort="past">Simple Past <i class="fas fa-sort"></i></th>
-                                    <th data-sort="participle">Past Participle <i class="fas fa-sort"></i></th>
-                                    <th>Audio</th>
-                                </tr>
-                            </thead>
-                            <tbody id="verbs-tbody">
-                                <!-- Verbs will be populated by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-
-    <div id="auth-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="close-auth-modal">&times;</span>
-            <h2>Connexion / Inscription</h2>
-            <div id="auth-forms">
-                <div id="login-form">
-                    <h3>Connexion</h3>
-                    <input type="email" id="login-email" placeholder="Email" required>
-                    <input type="password" id="login-password" placeholder="Mot de passe" required>
-                    <button id="login-btn" class="btn">Se connecter</button>
-                    <p>Pas encore de compte ? <a href="#" id="show-register">S'inscrire</a></p>
-                </div>
-                <div id="register-form" style="display: none;">
-                    <h3>Inscription</h3>
-                    <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
-                    <input type="email" id="register-email" placeholder="Email" required>
-                    <input type="password" id="register-password" placeholder="Mot de passe" required>
-                    <input type="password" id="register-confirm-password" placeholder="Confirmer le mot de passe" required>
-                    <button type="submit" id="register-submit" class="btn">S'inscrire</button>
-                    <p>Déjà un compte ? <a href="#" id="show-login">Se connecter</a></p>
-                </div>
+            <div class="p-4 border-t border-slate-200 dark:border-slate-700 space-y-2">
+                <button id="startExerciseBtn"
+                    class="w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-gamepad"></i> Quiz Mode
+                </button>
+                <button id="downloadPdfBtn"
+                    class="w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                    <i class="fas fa-file-pdf"></i> Download PDF
+                </button>
             </div>
-        </div>
-    </div>
+        </aside>
 
-    <div id="verb-details-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="close-verb-details-modal">&times;</span>
-            <h2 id="verb-details-title">Détails du verbe</h2>
-            <div id="verb-details-content">
-                <div id="verb-forms">
-                    <div class="verb-form-item">
-                        <strong>Base Form:</strong> <span id="verb-base-form"></span>
-                    </div>
-                    <div class="verb-form-item">
-                        <strong>Simple Past:</strong> <span id="verb-past-form"></span>
-                    </div>
-                    <div class="verb-form-item">
-                        <strong>Past Participle:</strong> <span id="verb-participle-form"></span>
-                    </div>
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+
+            <!-- Header -->
+            <header
+                class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-4 flex justify-between items-center z-10">
+                <div class="md:hidden font-bold text-lg text-blue-600 dark:text-blue-400">Irregular Verbs</div>
+
+                <div class="flex-1 max-w-md mx-4 hidden md:block relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Search verbs..."
+                        class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-700 border-none rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-800 dark:text-slate-100">
                 </div>
-                <div id="verb-explanation">
-                    <h3>Explication</h3>
-                    <p id="verb-explanation-text"></p>
-                </div>
-                <div id="verb-examples">
-                    <h3>Exemples de phrases</h3>
-                    <ul id="verb-examples-list"></ul>
-                </div>
-                <div id="verb-actions" style="margin-top: 1.5rem; display: flex; gap: 1rem;">
-                    <button id="practice-verb-btn" class="btn">Pratiquer ce verbe</button>
-                    <button id="pronounce-verb-btn" class="btn" style="background-color: #27ae60;">
-                        <i class="fas fa-volume-up"></i> Prononcer
+
+                <div class="flex items-center gap-4">
+                    <button id="themeToggle"
+                        class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors">
+                        <i class="fas fa-moon"></i>
                     </button>
+
+                    <div id="auth-buttons" class="flex gap-2">
+                        <button id="login-nav-btn"
+                            class="px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-700 rounded-lg transition-colors">Login</button>
+                    </div>
+
+                    <div id="user-menu" class="hidden flex items-center gap-3">
+                        <span id="username-display" class="text-sm font-medium"></span>
+                        <button id="logout-btn"
+                            class="px-3 py-1 text-xs bg-red-100 text-red-600 hover:bg-red-200 rounded-full transition-colors">Logout</button>
+                    </div>
                 </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-8" id="main-scroll">
+
+                <!-- Home Section (Welcome) -->
+                <div id="home" class="content-section hidden">
+                    <!-- This is managed by app.js logic mostly, but we'll default to showing verbs container -->
+                </div>
+
+                <!-- Verbs Table Container -->
+                <div id="verbs-container" class="content-section active animate-fadeIn">
+                    <div
+                        class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col h-[calc(100vh-140px)]">
+                        <div class="overflow-y-auto flex-1 custom-scrollbar">
+                            <table class="w-full text-left border-collapse">
+                                <thead
+                                    class="sticky top-0 z-10 bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur shadow-sm">
+                                    <tr
+                                        class="border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs uppercase tracking-wider font-semibold">
+                                        <th class="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+                                            data-sort="base">
+                                            <div class="flex items-center gap-2">
+                                                Base Form
+                                                <i
+                                                    class="fas fa-sort text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                                            </div>
+                                        </th>
+                                        <th class="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+                                            data-sort="past">
+                                            <div class="flex items-center gap-2">
+                                                Simple Past
+                                                <i
+                                                    class="fas fa-sort text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                                            </div>
+                                        </th>
+                                        <th class="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+                                            data-sort="pastParticiple">
+                                            <div class="flex items-center gap-2">
+                                                Past Participle
+                                                <i
+                                                    class="fas fa-sort text-slate-400 group-hover:text-blue-500 transition-colors"></i>
+                                            </div>
+                                        </th>
+                                        <th class="p-4 w-16 text-center">Audio</th>
+                                        <th class="p-4 w-16 text-center">Fav</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="verbs-tbody"
+                                    class="divide-y divide-slate-100 dark:divide-slate-700 text-slate-700 dark:text-slate-300">
+                                    <!-- Rows injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl p-8 max-w-md w-full mx-4 relative">
+            <button id="closeAuthModal"
+                class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
+            <!-- Login Form -->
+            <form id="login-form" class="space-y-4">
+                <h2 class="text-2xl font-bold text-center mb-6 text-blue-600">Login</h2>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Email</label>
+                    <input type="email" id="login-email"
+                        class="w-full p-2 rounded border border-slate-300 dark:border-slate-600 dark:bg-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Password</label>
+                    <input type="password" id="login-password"
+                        class="w-full p-2 rounded border border-slate-300 dark:border-slate-600 dark:bg-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
+                        required>
+                </div>
+                <button id="login-btn" type="submit"
+                    class="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Login</button>
+                <p class="text-center text-sm mt-4">
+                    Don't have an account? <a href="#" id="show-register"
+                        class="text-blue-600 hover:underline">Register</a>
+                </p>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="space-y-4 hidden">
+                <h2 class="text-2xl font-bold text-center mb-6 text-blue-600">Register</h2>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Username</label>
+                    <input type="text" id="register-username"
+                        class="w-full p-2 rounded border border-slate-300 dark:border-slate-600 dark:bg-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Email</label>
+                    <input type="email" id="register-email"
+                        class="w-full p-2 rounded border border-slate-300 dark:border-slate-600 dark:bg-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Password</label>
+                    <input type="password" id="register-password"
+                        class="w-full p-2 rounded border border-slate-300 dark:border-slate-600 dark:bg-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Confirm Password</label>
+                    <input type="password" id="register-confirm-password"
+                        class="w-full p-2 rounded border border-slate-300 dark:border-slate-600 dark:bg-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
+                        required>
+                </div>
+                <button id="register-submit" type="submit"
+                    class="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Register</button>
+                <p class="text-center text-sm mt-4">
+                    Already have an account? <a href="#" id="show-login" class="text-blue-600 hover:underline">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Verb Details Modal -->
+    <div id="verb-details-modal" class="modal">
+        <div
+            class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl p-8 max-w-2xl w-full mx-4 relative max-h-[90vh] overflow-y-auto">
+            <button id="closeVerbDetailsModal"
+                class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
+            <h2 id="verb-details-title" class="text-2xl font-bold mb-6 text-blue-600 dark:text-blue-400">Verb Details
+            </h2>
+
+            <div class="grid grid-cols-3 gap-4 mb-8 text-center">
+                <div class="p-4 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                    <div class="text-xs text-slate-500 uppercase mb-1">Base</div>
+                    <div id="verb-base-form" class="text-lg font-bold text-blue-600"></div>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                    <div class="text-xs text-slate-500 uppercase mb-1">Past</div>
+                    <div id="verb-past-form" class="text-lg font-bold"></div>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                    <div class="text-xs text-slate-500 uppercase mb-1">Participle</div>
+                    <div id="verb-participle-form" class="text-lg font-bold"></div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Explanation</h3>
+                    <p id="verb-explanation-text" class="text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-lg mb-2">Examples</h3>
+                    <ul id="verb-examples-list" class="space-y-2 list-disc pl-5 text-slate-600 dark:text-slate-300">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-8 flex gap-4">
+                <button id="pronounce-verb-btn"
+                    class="flex-1 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                    <i class="fas fa-volume-up mr-2"></i> Pronounce
+                </button>
+                <button id="practice-verb-btn"
+                    class="flex-1 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-dumbbell mr-2"></i> Practice
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- Exercise Modal -->
     <div id="exercise-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="close-exercise-modal">&times;</span>
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl p-8 max-w-2xl w-full mx-4 relative">
+            <button id="closeExerciseModal"
+                class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+
             <div id="exercise-container">
-                <div id="exercise-header">
-                    <span id="exercise-progress">Question 1/10</span>
-                    <span id="exercise-timer">Temps restant: 60s</span>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-blue-600">Quiz Mode</h2>
+                    <div id="exercise-timer" class="font-mono bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded text-sm">
+                        60s</div>
                 </div>
-                <h2 id="exercise-question">Question</h2>
-                <div id="exercise-options" class="options-container">
-                    <!-- Les options seront ajoutées dynamiquement -->
+
+                <div id="exercise-progress" class="text-sm text-slate-500 mb-4">Question 1/10</div>
+
+                <div id="exercise-question" class="text-2xl font-bold text-center mb-8"></div>
+
+                <div id="exercise-options" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <!-- Options injected here -->
                 </div>
-                <div id="exercise-feedback"></div>
-                <button id="next-question-btn" class="btn" style="display: none;">Question suivante</button>
-                <button id="finish-quiz-btn" class="btn" style="display: none;">Terminer le quiz</button>
+
+                <div id="exercise-feedback" class="text-center font-bold min-h-[1.5rem] mb-4"></div>
+
+                <div class="flex justify-end">
+                    <button id="next-question-btn"
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors hidden">Next</button>
+                    <button id="finish-quiz-btn"
+                        class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors hidden">Finish</button>
+                </div>
             </div>
-            <div id="exercise-results" style="display: none;">
-                <h2>Résultats du quiz</h2>
-                <div id="score-display">Score: 0/0 (0%)</div>
-                <div id="time-spent">Temps passé: 0s</div>
-                <div id="correct-answers">Bonnes réponses: 0</div>
-                <button id="restart-quiz" class="btn">Recommencer</button>
-                <button id="close-quiz" class="btn">Fermer</button>
+
+            <div id="exercise-results" class="hidden text-center">
+                <i class="fas fa-trophy text-5xl text-yellow-400 mb-4"></i>
+                <h2 class="text-3xl font-bold mb-6">Quiz Complete!</h2>
+
+                <div id="score-display" class="text-2xl font-bold text-blue-600 mb-4"></div>
+
+                <div class="space-y-2 text-slate-600 dark:text-slate-300 mb-8">
+                    <div id="time-spent"></div>
+                    <div id="correct-answers"></div>
+                </div>
+
+                <div class="flex gap-4 justify-center">
+                    <button id="restart-quiz"
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Try
+                        Again</button>
+                    <button id="close-quiz"
+                        class="px-6 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">Close</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bibliothèque jsPDF pour générer des PDFs -->
+    <!-- Notification Container -->
+    <div id="notification-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Charger data.js en premier (non-module pour les fonctions globales) -->
-    <script src="data.js"></script>
-    <!-- Charger les modules -->
     <script type="module" src="app.js"></script>
 </body>
+
 </html>
